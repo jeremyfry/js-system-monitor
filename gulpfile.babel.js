@@ -7,6 +7,7 @@ import mainBowerFiles from 'main-bower-files';
 import gulpFilter from 'gulp-filter';
 import connect from 'gulp-connect';
 import proxy from 'http-proxy-middleware';
+var exec = require('child_process').execFile;
 
 const distDir = './dist/';
 
@@ -50,6 +51,19 @@ gulp.task('watch', ()=>{
 	gulp.watch('app/**/*.js', ['js']);
 });
 
+gulp.task('systemMonitor', ()=>{
+	exec(
+		'Remote Sensor Monitor.exe',
+		{cwd: 'Remote.Sensor.Monitor.v.2.1.0'},
+		(error, stdout, stderr) => {
+			if (error) {
+				throw error;
+			}
+			console.log(stdout);
+		}
+	);
+});
+
 gulp.task('connect', ()=>{
 	connect.server({
 		root: 'dist',
@@ -63,4 +77,4 @@ gulp.task('connect', ()=>{
 	});
 });
 
-gulp.task('default', ['js', 'static', 'vendor', 'connect', 'watch']);
+gulp.task('default', ['js', 'static', 'vendor', 'connect', 'watch', 'systemMonitor']);
