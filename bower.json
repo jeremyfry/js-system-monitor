@@ -1,0 +1,22 @@
+{
+  "name": "js-system-monitor",
+  "description": "System monitor",
+  "main": "index.js",
+  "authors": [
+    "Jeremy Fry"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist": "^0.9.8",
+    "fetch": "^1.0.0",
+    "es6-promise": "^3.2.2"
+  }
+}
