@@ -5,11 +5,21 @@ class SystemMonitor {
 		this.charts = {};
 		let element = document.createElement("div");
 		this.view.appendChild(element);
-		this.charts.cpuUsage = new Chart(element, 'Pie');
+		this.charts = [];
+		this.charts.push(new Chart(element, 'Pie', {
+			sensorName: 'Generic Memory: Memory',
+			sensorClass: 'Load',
+			chartOptions:{
+				donut: true,
+				total: 200,
+				startAngle: 270,
+				donutWidth: 30
+			}
+		}));
 
 		setInterval(()=>{
 			this.fetchData();
-		}, 2000);
+		}, 1000);
 	}
 
 	fetchData(){
@@ -23,6 +33,9 @@ class SystemMonitor {
 	}
 
 	processData(data) {
+		this.charts.forEach((chart)=>{
+			chart.update(data);
+		});
 		console.log(data);
 	}
 
@@ -31,13 +44,25 @@ class SystemMonitor {
 window.addEventListener('load', () => new SystemMonitor());
 
 class Chart {
-	constructor(element, chartType, options){
+	constructor(element, chartType, options = {}){
 		this.element = element;
-		this.dataSet = [];
-		this.chart = new Chartist[chartType](element, this.dataSet);
+		this.dataSet = {
+			series: [[1]]
+		};
+		this.chart = new Chartist[chartType](element, this.dataSet, options.chartOptions);
+		this.sensorName = options.sensorName;
+		this.sensorClass = options.sensorClass;
 	}
 
 	update(data){
-		this.dataSet.push(data);
+		let dataItems = data.filter((dataItem)=> {
+			return dataItem.SensorClass === this.sensorClass && dataItem.SensorName === this.sensorName;
+		});
+		this.dataSet.series[0] = [+dataItems[0].SensorValue];
+		this.chart.update();
 	}
 }
+
+// class Donut extends Chart{
+//
+// }

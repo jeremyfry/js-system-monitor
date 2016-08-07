@@ -50,19 +50,19 @@ gulp.task('watch', ()=>{
 	gulp.watch(['app/**/*.css', 'app/**/*.html'], ['static']);
 	gulp.watch('app/**/*.js', ['js']);
 });
-
-gulp.task('systemMonitor', ()=>{
-	exec(
-		'Remote Sensor Monitor.exe',
-		{cwd: 'Remote.Sensor.Monitor.v.2.1.0'},
-		(error, stdout, stderr) => {
-			if (error) {
-				throw error;
-			}
-			console.log(stdout);
-		}
-	);
-});
+//
+// gulp.task('systemMonitor', ()=>{
+// 	exec(
+// 		'Remote Sensor Monitor.exe',
+// 		{cwd: 'Remote.Sensor.Monitor.v.2.1.0'},
+// 		(error, stdout, stderr) => {
+// 			if (error) {
+// 				throw error;
+// 			}
+// 			console.log(stdout);
+// 		}
+// 	);
+// });
 
 gulp.task('connect', ()=>{
 	connect.server({
@@ -77,4 +77,4 @@ gulp.task('connect', ()=>{
 	});
 });
 
-gulp.task('default', ['js', 'static', 'vendor', 'connect', 'watch', 'systemMonitor']);
+gulp.task('default', ['js', 'static', 'vendor', 'connect', 'watch']);
