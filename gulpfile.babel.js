@@ -1,26 +1,32 @@
 import gulp from 'gulp';
-import babel from 'gulp-babel';
-import jshint from 'gulp-jshint';
+//import jshint from 'gulp-jshint';
 import concat from 'gulp-concat';
 import sourcemaps from 'gulp-sourcemaps';
 import mainBowerFiles from 'main-bower-files';
 import gulpFilter from 'gulp-filter';
 import connect from 'gulp-connect';
 import proxy from 'http-proxy-middleware';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import buffer from 'vinyl-buffer';
+import source from 'vinyl-source-stream';
 var exec = require('child_process').execFile;
 
 const distDir = './dist/';
 
 gulp.task('js', () =>{
-	gulp.src('./app/**/*.babel.js')
-		.pipe(jshint('.jshintrc'))
-		.pipe(jshint.reporter('default'))
-		.pipe(babel({
-			presets: ['es2015']
-		}))
-		.pipe(concat('compiled.js'))
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(distDir));
+	var bundler = browserify({
+		entries: 'app/app.js',
+		debug: true
+	});
+	bundler.transform(babelify);
+	bundler.bundle()
+		.on('error', function (err) { console.error(err); })
+		.pipe(source('app.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('vendor', ()=>{
@@ -50,19 +56,19 @@ gulp.task('watch', ()=>{
 	gulp.watch(['app/**/*.css', 'app/**/*.html'], ['static']);
 	gulp.watch('app/**/*.js', ['js']);
 });
-//
-// gulp.task('systemMonitor', ()=>{
-// 	exec(
-// 		'Remote Sensor Monitor.exe',
-// 		{cwd: 'Remote.Sensor.Monitor.v.2.1.0'},
-// 		(error, stdout, stderr) => {
-// 			if (error) {
-// 				throw error;
-// 			}
-// 			console.log(stdout);
-// 		}
-// 	);
-// });
+
+gulp.task('systemMonitor', ()=>{
+	exec(
+		'Remote Sensor Monitor.exe',
+		{cwd: 'Remote.Sensor.Monitor.v.2.1.0'},
+		(error, stdout, stderr) => {
+			if (error) {
+				throw error;
+			}
+			console.log(stdout);
+		}
+	);
+});
 
 gulp.task('connect', ()=>{
 	connect.server({
@@ -77,4 +83,4 @@ gulp.task('connect', ()=>{
 	});
 });
 
-gulp.task('default', ['js', 'static', 'vendor', 'connect', 'watch']);
+gulp.task('default', ['js', 'static', 'vendor', 'connect', 'systemMonitor', 'watch']);

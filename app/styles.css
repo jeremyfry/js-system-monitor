@@ -1,0 +1,10 @@
+body, div{
+    width: 100%;
+}
+.ct-line{
+    stroke-width: 1px;
+}
+
+.ct-point{
+    stroke-width: 2px;
+}
