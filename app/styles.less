@@ -1,0 +1,76 @@
+body, div{
+    width: 100%;
+    background-color: #001207;
+}
+
+.ct-chart{
+    width: 50%;
+}
+
+.cpu-usage {
+    .ct-grid{
+        stroke: rgba(255,255,255, 0.5);
+        stroke-width: .5px;
+        stroke-dasharray: none;
+    }
+    .ct-line {
+        stroke-width: 2px;
+    }
+
+    .ct-point {
+        stroke-width: 0;
+    }
+
+    .ct-series-a{
+        .ct-line, .ct-point{
+            stroke: #00b253;
+        }
+    }
+
+    .ct-series-b{
+        .ct-line, .ct-point{
+            stroke: #e8bc00;
+        }
+    }
+
+    .ct-series-c{
+        .ct-line, .ct-point{
+            stroke: #0095b2;
+        }
+    }
+
+    .ct-series-d{
+        .ct-line, .ct-point{
+            stroke: #b20061;
+        }
+    }
+
+    .ct-label{
+        color: #00B253;
+    }
+}
+
+.pc-memory-usage, .graphics-memory-usage{
+    .ct-chart-donut:after{
+        content: 'Test';
+        color: white;
+        position: relative;
+        top: 20px;
+        left: 20px;
+    }
+    .ct-label p{
+        color: #fff;
+        font-size: 2rem;
+        text-align: center;
+        position: relative;
+        top: 50%;
+        transform: translateY(-100%);
+    }
+
+    .ct-series-b{
+        .ct-slice-donut{
+            stroke-width: 15px !important;
+            stroke: #004452;
+        }
+    }
+}

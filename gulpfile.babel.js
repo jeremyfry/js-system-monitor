@@ -10,6 +10,7 @@ import browserify from 'browserify';
 import babelify from 'babelify';
 import buffer from 'vinyl-buffer';
 import source from 'vinyl-source-stream';
+import less from 'gulp-less';
 var exec = require('child_process').execFile;
 
 const distDir = './dist/';
@@ -43,17 +44,21 @@ gulp.task('vendor', ()=>{
 });
 
 gulp.task('static', ()=>{
-	gulp.src('./app/**/*.css')
-		.pipe(concat('compiled.css'))
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(distDir));
-
 	gulp.src('./app/**/*.html')
 		.pipe(gulp.dest(distDir));
 });
 
+gulp.task('css', ()=>{
+	gulp.src('./app/**/*.less')
+		.pipe(less())
+		.pipe(concat('compiled.css'))
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest(distDir));
+});
+
 gulp.task('watch', ()=>{
-	gulp.watch(['app/**/*.css', 'app/**/*.html'], ['static']);
+	gulp.watch(['app/**/*.html'], ['static']);
+	gulp.watch(['app/**/*.less'], ['css'])
 	gulp.watch('app/**/*.js', ['js']);
 });
 
@@ -83,4 +88,4 @@ gulp.task('connect', ()=>{
 	});
 });
 
-gulp.task('default', ['js', 'static', 'vendor', 'connect', 'systemMonitor', 'watch']);
+gulp.task('default', ['js', 'static', 'css', 'vendor', 'connect', 'systemMonitor', 'watch']);
