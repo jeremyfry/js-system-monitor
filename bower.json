@@ -17,6 +17,7 @@
   "dependencies": {
     "chartist": "^0.9.8",
     "fetch": "^1.0.0",
-    "es6-promise": "^3.2.2"
+    "es6-promise": "^3.2.2",
+    "gridism": "^0.2.2"
   }
 }

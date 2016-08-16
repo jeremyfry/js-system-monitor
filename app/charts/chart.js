@@ -2,7 +2,7 @@ export default class Chart {
 	constructor(element, chartType, options = {}){
 		this.element = element;
 		this.dataSets = {
-			series: [[1,2,3,4,5,6,7], [5,6,7]]
+			series: []
 		};
 		this.chart = new Chartist[chartType](element, this.dataSets, options.chartOptions);
 		this.sensors = options.sensors;
@@ -10,7 +10,7 @@ export default class Chart {
 
 	matchedSensorIndex(dataItem){
 		return this.sensors.findIndex((sensor)=>{
-			return dataItem.SensorClass === sensor.sensorClass && dataItem.SensorName === sensor.sensorName;
+			return dataItem.SensorClass.indexOf(sensor.sensorClass) !== -1 && dataItem.SensorName === sensor.sensorName;
 		});
 	}
 

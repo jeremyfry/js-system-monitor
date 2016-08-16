@@ -58,7 +58,7 @@ gulp.task('css', ()=>{
 
 gulp.task('watch', ()=>{
 	gulp.watch(['app/**/*.html'], ['static']);
-	gulp.watch(['app/**/*.less'], ['css'])
+	gulp.watch(['app/**/*.less'], ['css']);
 	gulp.watch('app/**/*.js', ['js']);
 });
 
@@ -88,4 +88,4 @@ gulp.task('connect', ()=>{
 	});
 });
 
-gulp.task('default', ['js', 'static', 'css', 'vendor', 'connect', 'systemMonitor', 'watch']);
+gulp.task('default', ['js', 'static', 'css', 'vendor', 'connect', 'watch']);

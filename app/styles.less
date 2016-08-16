@@ -1,18 +1,25 @@
-body, div{
+*{
+    box-sizing: border-box;
+}
+body{
     width: 100%;
     background-color: #001207;
+    font-family: 'Orbitron', sans-serif;
+    padding: 20px;
 }
 
-.ct-chart{
-    width: 50%;
+div{
+    width: 100%;
+    display: inline-block;
 }
 
-.cpu-usage {
-    .ct-grid{
-        stroke: rgba(255,255,255, 0.5);
+.line-chart(){
+    .ct-grid {
+        stroke: rgba(255, 255, 255, 0.5);
         stroke-width: .5px;
         stroke-dasharray: none;
     }
+
     .ct-line {
         stroke-width: 2px;
     }
@@ -20,29 +27,36 @@ body, div{
     .ct-point {
         stroke-width: 0;
     }
+}
 
-    .ct-series-a{
-        .ct-line, .ct-point{
-            stroke: #00b253;
-        }
+.line-color(@color){
+    stroke: @color;
+    span {
+        background-color: @color;
+    }
+}
+
+.cpu-usage{
+    .line-chart();
+
+    .ct-series-a .ct-line, .legend-a{
+        .line-color(#00b253);
     }
 
-    .ct-series-b{
-        .ct-line, .ct-point{
-            stroke: #e8bc00;
-        }
+    .ct-series-b .ct-line, .legend-b{
+        .line-color(#e8bc00);
     }
 
-    .ct-series-c{
-        .ct-line, .ct-point{
-            stroke: #0095b2;
-        }
+    .ct-series-c .ct-line, .legend-c{
+        .line-color(#0095b2);
     }
 
-    .ct-series-d{
-        .ct-line, .ct-point{
-            stroke: #b20061;
-        }
+    .ct-series-d .ct-line, .legend-d{
+        .line-color(#b20061);
+    }
+
+    .ct-series-e .ct-line, .legend-e{
+        .line-color(#c8c5cc)
     }
 
     .ct-label{
@@ -50,17 +64,22 @@ body, div{
     }
 }
 
-.pc-memory-usage, .graphics-memory-usage{
-    .ct-chart-donut:after{
-        content: 'Test';
-        color: white;
-        position: relative;
-        top: 20px;
-        left: 20px;
+.network{
+    .line-chart();
+
+    .ct-series-a .ct-line, .legend-a{
+        .line-color(#00b253);
     }
+
+    .ct-series-b .ct-line, .legend-b{
+        .line-color(#e8bc00);
+    }
+}
+
+.pc-memory-usage, .graphics-memory-usage{
     .ct-label p{
         color: #fff;
-        font-size: 2rem;
+        font-size: 2vw;
         text-align: center;
         position: relative;
         top: 50%;
@@ -73,4 +92,23 @@ body, div{
             stroke: #004452;
         }
     }
+}
+
+.legend{
+    &:first-child{
+        margin-left: 45px;
+    }
+    color: white;
+    display: inline-block;
+    width: auto;
+    span{
+        display: inline-block;
+        width: 20px;
+        height: 6px;
+        margin: 3px 5px 3px 15px;
+    }
+}
+
+.donut{
+    margin-bottom: -4vw;
 }

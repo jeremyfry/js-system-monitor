@@ -1,5 +1,5 @@
 import Chart from './chart';
-import HSLCalc from '../helpers';
+import {HSLCalc} from '../helpers';
 export default class DonutChart extends Chart{
 	constructor(element, options = {}){
 		super(element, 'Pie', options);
